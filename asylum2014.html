@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en-uk">
+    
+    <head>
+		<title> trials and tribulations</title>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+	</head>
+	<body>
+		<script>
+
+		d3.csv("asylum2014.csv", function (data)
+		{
+
+		var canvas = d3.select("body")
+					.append("svg")
+					.attr("width", 1000)
+					.attr("height", 2000)
+
+		
+		canvas.selectAll("rect")
+					.data(data)
+					.enter()
+						.append("rect")
+						.attr("width", 10)
+						.attr("height", 30)
+						.attr("fill", "blue")
+						.attr("y", function(d, i){return i * 40;})
+						.transition()
+						.duration(4000)
+						.attr("width", function(d){return d.totalperc * 100;})
+						//.ease("elastic")
+						.attr("height", 30)
+						.attr("fill", "red")
+						.attr("y", function(d, i){return i * 40;})				
+						;
+
+		canvas.selectAll("bar")
+					.data(data)
+					.enter()
+						.append("rect")
+						.attr("width", 10)
+						.attr("height", 30)
+						.attr("fill", "blue")
+						.attr("y", function(d, i){return i * 40;})
+						.transition()
+						.duration(4000)
+						.attr("width", function(d){return d.accepted * 100;})
+						.attr("height", 30)
+						.attr("fill", "green")
+						.attr("y", function(d, i){return i * 40;});
+
+		
+	
+
+		canvas.selectAll("text")
+					.data(data)
+					.enter()
+						.append("text")
+						.attr("fill", "black")
+						.attr("y", function(d, i){return i * 40 + 20;})
+						.text(function (d) {return d.country;});
+
+		});	
+
+		
+		</script>
+
+	</body>
+</html>
